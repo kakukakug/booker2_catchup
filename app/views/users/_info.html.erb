@@ -1,12 +1,16 @@
 <table class='table'>
   <tr><%= image_tag user.get_profile_image, size:'100x100' %></tr>
   <tr>
-	  <th>name</th>
-	  <th><%= user.name %></th>
+    <th>name</th>
+    <th><%= user.name %></th>
   </tr>
   <tr>
-	  <th>introduction</th>
-	  <th><%= user.introduction %></th>
+    <th>introduction</th>
+    <th><%= user.introduction %></th>
+  </tr>
+  <tr>
+    <th>comments</th>
+    <th><%= "#{user.get_comments_count}件" %></th>
   </tr>
 </table>
 　

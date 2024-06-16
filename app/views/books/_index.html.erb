@@ -9,14 +9,23 @@
   </thead>
   <tbody>
     <% books.each do |book| %>
+      <% currentUserFavorite = Favorite.find_by(user_id: current_user.id, book_id:book.id) %>
       <tr>
         <td>
           <%= link_to(book.user) do %>
-            <%= image_tag book.user.profile_image, size:'50x50' %>
+            <%= image_tag book.user.get_profile_image, size:'50x50' %>
           <% end %>
         </td>
         <td><%= link_to book.title,book %></td>
         <td><%= book.body %></td>
+        <td>
+          <% if currentUserFavorite == nil %>
+            <%= link_to "♡#{book.get_favorites_count}", favorites_path(params:{book_id:book}),method: :post, class: "text-secondary" %>
+          <% else %>
+            <%= link_to "♡#{book.get_favorites_count}", favorite_path(currentUserFavorite), method: :delete, class: "text-primary" %>
+          <% end %>
+        </td>
+        <td>コメント数：<%= book.get_comments_count %></td>
       </tr>
     <% end %>
   </tbody>
