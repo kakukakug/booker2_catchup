@@ -5,6 +5,12 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @user = User.find(@book.user_id)
     @newBook = Book.new
+
+    @currentUserFavorite = Favorite.find_by(user_id: current_user.id, book_id:params[:id])
+
+    @bookComments = BookComment.where(book_id:params[:id])
+
+    @newBookComment = BookComment.new
   end
 
   def index
