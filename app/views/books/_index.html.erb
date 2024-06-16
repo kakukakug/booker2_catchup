@@ -4,6 +4,7 @@
       <th></th>
       <th>Title</th>
       <th>Opinion</th>
+      <th>Tag</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,6 +20,11 @@
         <td><%= link_to book.title,book %></td>
         <td><%= book.body %></td>
         <td>
+          <% if book.tag != nil %>
+            <%= link_to book.tag, searches_search_path(params:{tag:book.tag}) %>
+          <% end %>
+        </td>
+        <td>
           <% if currentUserFavorite == nil %>
             <%= link_to "♡#{book.get_favorites_count}", favorites_path(params:{book_id:book}),method: :post, class: "text-secondary" %>
           <% else %>
@@ -26,7 +32,22 @@
           <% end %>
         </td>
         <td>コメント数：<%= book.get_comments_count %></td>
+        <td>
+          <div id="post_raty_<%= book.id %>"></div>
+        </td>
       </tr>
+      <script>
+        (() => {
+           const elem = document.querySelector('#post_raty_<%= book.id%>');
+           const opt = {
+             score: <%= book.score %>,
+             number: 5,
+             path: "/assets/",
+             readOnly: true,
+           };
+           raty(elem,opt);
+         })()
+      </script>
     <% end %>
   </tbody>
 </table>

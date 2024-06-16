@@ -1,5 +1,12 @@
 class SearchesController < ApplicationController
   def search
+
+    if params[:tag] != nil
+      @result = Book.where("tag = :tag", {tag:params[:tag]})
+      @mode = "book"
+      @text = params[:tag]
+      return
+    end
     @mode = params[:mode]
     @text = params[:text]
     case params[:match]
