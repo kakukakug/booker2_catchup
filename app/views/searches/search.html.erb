@@ -1,0 +1,16 @@
+<div class='container px-5 px-sm-0'>
+  <div class='row'>
+    <% if @mode == "book" %>
+      <div class='col-md-8 offset-md-1'>
+        <h2>Books search for "<%= @text %>"</h2>
+        <%= render 'books/index', books: @result %>
+      </div>
+    <% end %>
+    <% if @mode == "user" %>
+      <div class='col-md-8 offset-md-1'>
+        <h2>Users search for "<%= @text %>"</h2>
+        <%= render 'users/index', users: @result %>
+      </div>
+    <% end %>
+  </div>
+</div>
