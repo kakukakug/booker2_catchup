@@ -5,6 +5,7 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @user = User.find(@book.user_id)
     @newBook = Book.new
+    @newBook.score = 0
 
     @currentUserFavorite = Favorite.find_by(user_id: current_user.id, book_id:params[:id])
 
@@ -14,8 +15,18 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.all
+    case params[:sort]
+      when "date" then
+        @books = Book.all.order("created_at DESC")
+      when "score" then
+        @books = Book.all.order("score DESC")
+      else
+        @books = Book.all
+      end
+    
     @book = Book.new
+    @book.score = 0
+
   end
 
   def create
@@ -51,7 +62,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title,:body)
+    params.require(:book).permit(:title,:body,:tag,:score)
   end
 
   def ensure_correct_user  

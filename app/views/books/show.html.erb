@@ -18,16 +18,20 @@
           </td>
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
-          <% if @book.user_id == current_user.id %>
-            <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
-            <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
-          <% end %>
+          <td><%= @book.tag %></td>
           <% if @currentUserFavorite == nil %>
             <td><%= link_to "♡#{@book.get_favorites_count}", favorites_path(params:{book_id:@book}),method: :post, class: "text-secondary" %></td>
           <% else %>
             <td><%= link_to "♡#{@book.get_favorites_count}", favorite_path(@currentUserFavorite), method: :delete, class: "text-primary" %></td>
           <% end %>
           <td><%= "コメント数：#{@book.get_comments_count}" %></td>
+          <td>
+            <div id="post_raty"></div>
+          </td>
+          <% if @book.user_id == current_user.id %>
+            <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
+            <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
+          <% end %>
         </tr>
         <% @bookComments.each do |bookComment| %>
           <tr>
@@ -52,3 +56,15 @@
     </div>
   </div>
 </div>
+<script>
+  (() => {
+     const elem = document.querySelector('#post_raty');
+     const opt = {
+       score: <%= @book.score %>,
+       number: 5,
+       path: "/assets/",
+       readOnly: true,
+     };
+     raty(elem,opt);
+   })()
+</script>

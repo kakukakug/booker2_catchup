@@ -5,12 +5,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @books = @user.books
     @book = Book.new
-
+    @book.score = 0
   end
 
   def index
     @users = User.all
     @book = Book.new
+    @book.score = 0
   end
 
   def edit
